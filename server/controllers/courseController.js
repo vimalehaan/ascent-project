@@ -41,4 +41,36 @@ const getAllCourses = async (req, res) => {
   }
 };
 
-module.exports = { createCourse, getAllCourses };
+const getCourseById = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    if (!courseId) {
+      return res.status(400).json({ error: "Course ID is required" });
+    }
+
+    const pool = await getDbConnection();
+    const result = await pool
+      .request()
+      .input("courseId", sql.Int, courseId)
+      .query(
+        `SELECT * FROM Courses WHERE id = @courseId;
+         SELECT student_id FROM StudentCourses WHERE course_id = @courseId;
+           `,
+      );
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    const course = result.recordset[0];
+    const studentsEnrolled = result.recordsets[1].map((row) => row.student_id);
+
+    res.status(200).json({...course, studentsEnrolled});
+  } catch (error) {
+    console.error("Error fetching course:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+module.exports = { createCourse, getAllCourses, getCourseById };
