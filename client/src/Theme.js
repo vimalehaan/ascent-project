@@ -1,7 +1,7 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
-let primaryColor = ['#e1f0ef', '#71c6c9', "#2aa1af", '#0e5563', '#06323d' ]
-let secondaryColor = ['#f0f2f4', '#DBE0E5', '#5B6B79', '#3E4853', '#131920']
+let primaryColor = ['#f7e9d4', '#eac995', "#DDA853", '#aa7622', '#6a4a15' ]
+let secondaryColor = ['#c3e4ee', '#38a6c7', '#16404D', '#0b2128', '#061114']
 let successColor = ['#e1f3d8', '#98d576', '#6bc33c', '#4b892a', '#2b4e18']
 let errorColor = ['#f5d6d6', '#dd6e6e', '#c62e2e', '#912222', '#531313']
 let warningColor = ['#fff9e6', '#fde281', '#fccd2a', '#e2b203', '#977702']

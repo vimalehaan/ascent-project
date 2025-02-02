@@ -20,10 +20,6 @@ const CourseCard = ({ course, onClick }) => {
     };
 
     const [isEnrolled, setIsEnrolled] = useState(false);
-    useEffect(() => {
-        // const enrolled = course.studentsEnrolled.includes(student.id);
-        // setIsEnrolled(enrolled);
-    }, [student]);
 
     return (
         <div>
@@ -56,8 +52,8 @@ const CourseCard = ({ course, onClick }) => {
                             component="div"
                             textAlign={"center"}
                             sx={{
-                                color: "white",
-                                backgroundColor: "secondary.main",
+                                color: "secondary.darker",
+                                backgroundColor: "primary.main",
                                 padding: "6px",
                                 borderRadius: "10px",
                                 fontWeight: "500",
@@ -77,26 +73,6 @@ const CourseCard = ({ course, onClick }) => {
                         >
                             {truncateText(course.description, 40)}
                         </Typography>
-
-                        <Box
-                            sx={{
-                                width: "100%",
-                                display: "flex",
-                                justifyContent: "end",
-                                mt: 1,
-                            }}
-                        >
-                            <Chip
-                                label= {isEnrolled ? "Already Enrolled" : "Enroll"}
-                                variant="filled"
-                                sx={{
-                                    height: "30px",
-                                    fontSize: "12px",
-                                    backgroundColor: isEnrolled ? "success.lighter" : "primary.lighter",
-                                    color: '#757575'
-                                }}
-                            />
-                        </Box>
                     </CardContent>
                 </CardActionArea>
             </Card>

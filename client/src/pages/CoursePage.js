@@ -50,11 +50,8 @@ const CoursePage = () => {
         setCourse(response.data);
 
         setError(null);
-        console.log(response.data.studentsEnrolled);
-        console.log(student.studentId);
 
         const enrolled = response.data.studentsEnrolled?.includes(student.studentId);
-        console.log(enrolled);
         setIsEnrolled(enrolled);
       } catch (err) {
         console.error(
@@ -85,7 +82,6 @@ const CoursePage = () => {
           },
         },
       );
-      console.log(response.data);
       alert(response.data.message);
       setIsEnrolled(true);
     } catch (error) {

@@ -27,9 +27,6 @@ export const AuthProvider = ({children}) => {
         setStudent(null);
     }
 
-    console.log(student);
-    console.log(token);
-
     return (
         <AuthContext.Provider value={{ student, logIn, logOut, token }}>
             {children}
