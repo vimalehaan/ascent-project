@@ -17,7 +17,6 @@ const createCourse = async (req, res) => {
       .query(
         "INSERT INTO Courses (title, description, content) VALUES (@title, @description, @content); SELECT SCOPE_IDENTITY() AS id",
       );
-    console.log(result);
 
     res.status(201).json({
       message: "Course created successfully",
@@ -33,11 +32,9 @@ const getAllCourses = async (req, res) => {
   try {
     const pool = await getDbConnection();
 
-    const result = await pool
-        .request()
-        .query("SELECT * FROM Courses");
+    const result = await pool.request().query("SELECT * FROM Courses");
 
-    res.status(200).json({courses: result.recordset});
+    res.status(200).json({ courses: result.recordset });
   } catch (error) {
     console.error("Error fetching courses:", error);
     res.status(500).json({ error: "Server error" });
