@@ -43,7 +43,7 @@ const registerStudent = async (req, res) => {
 
     res.status(201).json({
       message: "Student registered successfully",
-      studentId: result.recordset[0].id,
+      studentId: result.recordset[0].student_id,
     });
   } catch (error) {
     console.error(error);
@@ -65,7 +65,7 @@ const loginStudent = async (req, res) => {
       .request()
       .input("email", sql.NVarChar, email)
       .query(
-        "SELECT id, name, email, password FROM Students WHERE email = @email",
+        "SELECT student_id, name, email, password FROM Students WHERE email = @email",
       );
 
     if (result.recordset.length === 0) {
@@ -80,7 +80,7 @@ const loginStudent = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { studentId: student.id, name: student.name },
+      { studentId: student.student_id, name: student.name },
       jwt_Secret,
       { expiresIn: "1h" },
     );
@@ -89,7 +89,7 @@ const loginStudent = async (req, res) => {
       message: "Student login successfully",
       token: token,
       Student: {
-        id: student.id,
+        id: student.student_id,
         name: student.name,
         email: student.email,
       },
