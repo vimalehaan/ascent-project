@@ -14,7 +14,7 @@ const enrollCourse = async (req, res) => {
     const checkCourse = await pool
       .request()
       .input("courseId", sql.Int, courseId)
-      .query("SELECT id FROM Courses WHERE id = @courseId");
+      .query("SELECT course_id FROM Courses WHERE course_id = @courseId");
 
     if (checkCourse.recordset.length === 0) {
       return res.status(404).json({ error: "Course not found" });
@@ -25,7 +25,7 @@ const enrollCourse = async (req, res) => {
       .input("studentId", sql.Int, studentId)
       .input("courseId", sql.Int, courseId)
       .query(
-        "SELECT * FROM StudentCourses WHERE student_id = @studentId AND course_id = @courseId",
+        "SELECT * FROM Enrollments WHERE student_id = @studentId AND course_id = @courseId",
       );
 
     if (checkEnrollment.recordset.length > 0) {
@@ -39,7 +39,7 @@ const enrollCourse = async (req, res) => {
       .input("studentId", sql.Int, studentId)
       .input("courseId", sql.Int, courseId)
       .query(
-        "INSERT INTO StudentCourses (student_id, course_id) VALUES (@studentId, @courseId)",
+        "INSERT INTO Enrollments (student_id, course_id) VALUES (@studentId, @courseId)",
       );
 
     res.status(201).json({
@@ -61,10 +61,10 @@ const getEnrolledCourses = async (req, res) => {
       .request()
       .input("studentId", sql.Int, studentId)
       .query(
-        `SELECT c.id, c.title, c.description, c.content
+        `SELECT c.course_id, c.title, c.description, c.content
             FROM Courses c
-            INNER JOIN StudentCourses sc ON c.id = sc.course_id
-            WHERE sc.student_id = @studentId`,
+            INNER JOIN Enrollments e ON c.course_id = e.course_id
+            WHERE e.student_id = @studentId`,
       );
 
     if (result.recordset.length === 0) {
@@ -92,7 +92,7 @@ const unenrollCourse = async (req, res) => {
     const checkCourse = await pool
       .request()
       .input("courseId", sql.Int, courseId)
-      .query("SELECT id FROM Courses WHERE id = @courseId");
+      .query("SELECT course_id FROM Courses WHERE course_id = @courseId");
 
     if (checkCourse.recordset.length === 0) {
       return res.status(404).json({ error: "Course not found" });
@@ -117,7 +117,7 @@ const unenrollCourse = async (req, res) => {
       .input("studentId", sql.Int, studentId)
       .input("courseId", sql.Int, courseId)
       .query(
-        `DELETE FROM StudentCourses 
+        `DELETE FROM Enrollments 
          WHERE student_id = @studentId AND course_id = @courseId`,
       );
     console.log(result);

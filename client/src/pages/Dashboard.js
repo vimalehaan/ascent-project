@@ -85,9 +85,9 @@ const Dashboard = () => {
                         >
                             {courses.map((course) => (
                                 <CourseCard
-                                    key={course.id}
+                                    key={course.course_id}
                                     course={course}
-                                    onClick={() => handleClick(course.id)}
+                                    onClick={() => handleClick(course.course_id)}
                                 />
                             ))}
                         </Box>
