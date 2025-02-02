@@ -54,8 +54,8 @@ const getCourseById = async (req, res) => {
       .request()
       .input("courseId", sql.Int, courseId)
       .query(
-        `SELECT * FROM Courses WHERE id = @courseId;
-         SELECT student_id FROM StudentCourses WHERE course_id = @courseId;
+        `SELECT * FROM Courses WHERE course_id = @courseId;
+         SELECT student_id FROM Enrollments WHERE course_id = @courseId;
            `,
       );
 

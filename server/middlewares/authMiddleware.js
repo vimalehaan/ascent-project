@@ -12,7 +12,6 @@ const authenticateToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, jwt_Secret);
-    // console.log("DEC", decoded);
     req.student = decoded;
     next();
   } catch (error) {
